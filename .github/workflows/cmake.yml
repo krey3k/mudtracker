@@ -1,0 +1,47 @@
+name: CMake
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+  # The number of days to retain artifacts
+  RETENTION_DAYS: 30
+
+jobs:
+  build-linux:
+      runs-on: ubuntu-24.04
+      steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxft-dev libxext-dev libx11-dev libopengl-dev libgl-dev libxi-dev libxcursor-dev libasound2-dev
+      - name: Configure CMake Ubuntu
+        run: mkdir build && cd build && cmake .. -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+      - name: Build Ubuntu
+        run: cmake --build build --config ${{env.BUILD_TYPE}}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mudtracker-linux
+          path: |
+            build/bin
+          retention-days: ${{env.RETENTION_DAYS}}
+  build-msvc:
+      runs-on: windows-2022
+      steps:
+      - uses: actions/checkout@v4
+      - name: Configure CMake MSVC
+        run: mkdir build && cd build && cmake .. -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+      - name: Build MSVC
+        run: cmake --build build --config ${{env.BUILD_TYPE}}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mudtracker-msvc
+          path: |
+            build/bin
+          retention-days: ${{env.RETENTION_DAYS}}
