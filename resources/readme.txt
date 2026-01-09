@@ -26,7 +26,7 @@ v1.0 (????-??-??)
 	- [Feature] Will load entire General MIDI instrument set when importing MIDI/MUS
 	- [Feature] Added "Load GM" button to Instrument Editor view to load General MIDI defaults
 	- [Feature] Added "Export as Bank" button to Instrument Editor view to export instruments as a singular file
-	  - Instrument numbers will conform to standard Generam MIDI instrument mapping
+	  - Instrument numbers will conform to standard General MIDI instrument mapping
 	- [Fix] Added missing <sstream> include causing Clang builds to fail
 	- [Fix] Addressed GCC/Clang compilation warnings
 	- [Fix] Update link changed to Github repository
